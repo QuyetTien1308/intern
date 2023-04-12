@@ -10,6 +10,7 @@ import com.example.tien.Final.payload.request.UpdateRoleRequest;
 import com.example.tien.Final.payload.response.GetAllRes;
 import com.example.tien.Final.repos.EmployeeRepository;
 import com.example.tien.Final.repos.PositionRepository;
+import com.example.tien.Final.repos.RoleRepository;
 import com.example.tien.Final.repos.SalaryRepository;
 import com.example.tien.Final.service.IEmployeeService;
 import com.example.tien.Final.service.ISalaryService;
@@ -18,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -34,6 +36,8 @@ public class EmployeeService implements IEmployeeService {
     SalaryRepository salaryRepository;
     @Autowired
     private ISalaryService salaryService;
+    @Autowired
+    private RoleRepository roleRepository;
 
     @Autowired
     private ModelMapper modelMapper;
@@ -133,15 +137,24 @@ public class EmployeeService implements IEmployeeService {
                 return false;
             }else {
                 Set<Role> roles = employee.getRoles();
-                Role role = new Role();
+                Role role = roleRepository.findByName(request.getRole()).get();
+                if(ObjectUtils.isEmpty(role)){
 
-                role.setName(request.getRole());
-
-                roles.clear();
-                roles.add(role);
-                employee.setRoles(roles);
+                    roles.add(role);
+                }
+                else {
+                    role.setName(request.getRole());
+                    roles.clear();
+                    roles.add(role);
+                    employee.setRoles(roles);
+                }
                 Employee result = employeeRepository.save(employee);
                 return result != null;
+
+
+
+
+
             }
         }catch (Exception e){
             e.printStackTrace();
