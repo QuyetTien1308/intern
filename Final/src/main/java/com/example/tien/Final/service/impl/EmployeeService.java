@@ -137,23 +137,21 @@ public class EmployeeService implements IEmployeeService {
                 return false;
             }else {
                 Set<Role> roles = employee.getRoles();
-                Role role = roleRepository.findByName(request.getRole()).get();
-                if(ObjectUtils.isEmpty(role)){
-
-                    roles.add(role);
-                }
-                else {
+                Optional<Role> roleOptional = roleRepository.findByName(request.getRole());
+                if(roleOptional.isPresent()){
+                    Role role = roleOptional.get();
                     role.setName(request.getRole());
                     roles.clear();
                     roles.add(role);
                     employee.setRoles(roles);
+                } else {
+                    Role role = new Role();
+                    role.setName(request.getRole());
+                    roles.clear();
+                    roles.add(role);
                 }
                 Employee result = employeeRepository.save(employee);
                 return result != null;
-
-
-
-
 
             }
         }catch (Exception e){
