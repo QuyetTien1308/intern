@@ -5,6 +5,7 @@ import com.example.tien.Final.Dto.SalaryDto;
 import com.example.tien.Final.entity.Employee;
 import com.example.tien.Final.entity.Position;
 import com.example.tien.Final.entity.Salary;
+import com.example.tien.Final.payload.response.EmployeeResponse;
 import com.example.tien.Final.repos.EmployeeRepository;
 import com.example.tien.Final.repos.PositionRepository;
 import com.example.tien.Final.repos.SalaryRepository;
@@ -86,15 +87,15 @@ public class SalaryService implements ISalaryService {
             Employee employee = salary.getEmployee();
             BigDecimal baseSalary = positionRepository.findById(employee.getPosition().getId()).get().getBaseSalary();
             getAllRes.setTotalSalary((Long) ((baseSalary).longValue() * salary.getDaysWorked())+((salary.getOvertimeSalary()).longValue() * salary.getDaysOvertime()));
-            EmployeeDto employeeDto = new EmployeeDto();
-            employeeDto.setId(employee.getId());
-            employeeDto.setUsername(employee.getUsername());
-            employeeDto.setPositionId(employee.getPosition().getId());
-            employeeDto.setName(employee.getName());
-            getAllRes.setEmployeeDto(employeeDto);
+            EmployeeResponse response = new EmployeeResponse();
+            response.setId(employee.getId());
+            response.setUsername(employee.getUsername());
+            response.setName(employee.getName());
+            response.setPositionId(employee.getPosition().getId());
+
+            getAllRes.setEmployeeResponse(response);
             lstall.add(getAllRes);
         }
-
 
         return lstall;
     }

@@ -12,7 +12,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GetAllRes {
- private EmployeeDto employeeDto;
+ private EmployeeResponse employeeResponse;
 
  private Long TotalSalary;
 

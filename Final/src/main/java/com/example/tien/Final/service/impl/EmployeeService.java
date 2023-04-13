@@ -168,7 +168,7 @@ public class EmployeeService implements IEmployeeService {
             Iterator<GetAllRes> iterator = lstSalaries.iterator();
             while (iterator.hasNext()) {
                 GetAllRes getAllRes = iterator.next();
-                if (getAllRes.getEmployeeDto().getId() ==  SecurityUtils.getPrincipal().getId()) {
+                if (getAllRes.getEmployeeResponse().getId() ==  SecurityUtils.getPrincipal().getId()) {
                     iterator.remove();
                     break;
                 }
