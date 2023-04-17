@@ -51,7 +51,7 @@ public class EmployeeController {
             return ResponseEntity.ok("Success");
         }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-            new ErrorResponse(HttpStatus.BAD_REQUEST.name(), new SysError("Username not found", new ErrorParam()))
+            new ErrorResponse(HttpStatus.BAD_REQUEST.name(), new SysError("Employee id not found", new ErrorParam()))
         );
     }
     @GetMapping("/see-salary-employees")

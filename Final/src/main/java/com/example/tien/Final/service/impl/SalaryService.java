@@ -73,17 +73,8 @@ public class SalaryService implements ISalaryService {
         List<Salary> salaries=salaryRepository.findAll();
         List<GetAllRes> lstall = new ArrayList<>();
         for (Salary salary : salaries){
+
             GetAllRes getAllRes = new GetAllRes();
-//            SalaryDto salaryDto = SalaryDto.builder()
-//                    .id(salary.getId())
-////                    .baseSalary(salary.getBaseSalary())
-//                    .daysWorked(salary.getDaysWorked())
-//                    .daysOvertime(salary.getDaysOvertime())
-//                    .positionId(salary.getPosition().getId())
-//                    .positionName(salary.getPosition().getName())
-//                    .employeeId(salary.getEmployee().getId())
-//                    .overtimeSalary(salary.getOvertimeSalary())
-//                    .build();
             Employee employee = salary.getEmployee();
             BigDecimal baseSalary = positionRepository.findById(employee.getPosition().getId()).get().getBaseSalary();
             getAllRes.setTotalSalary((Long) ((baseSalary).longValue() * salary.getDaysWorked())+((salary.getOvertimeSalary()).longValue() * salary.getDaysOvertime()));

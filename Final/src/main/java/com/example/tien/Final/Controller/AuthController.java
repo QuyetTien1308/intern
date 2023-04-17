@@ -32,7 +32,7 @@ public class AuthController {
         JwtResponse jwtResponse = authService.signin(loginRequest);
         if (jwtResponse.getUsername() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    new ErrorResponse(HttpStatus.BAD_REQUEST.name(), new SysError("email-not-found", new ErrorParam()))
+                    new ErrorResponse(HttpStatus.BAD_REQUEST.name(), new SysError("username-not-found", new ErrorParam()))
             );
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(new SuccessReponse("success", jwtResponse, HttpStatus.OK.name()));
@@ -43,7 +43,7 @@ public class AuthController {
         EmployeeDto employeeDTO = authService.signup(signupRequest);
         if (employeeDTO.getUsername() == null || employeeDTO.getName() == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
-                    new ErrorResponse(HttpStatus.BAD_REQUEST.name(), new SysError("email-already-exists", new ErrorParam("email")))
+                    new ErrorResponse(HttpStatus.BAD_REQUEST.name(), new SysError("username-already-exists", new ErrorParam("username")))
             );
         } else {
             return ResponseEntity.status(HttpStatus.OK).body(new SuccessReponse("success",employeeDTO , HttpStatus.OK.name()));

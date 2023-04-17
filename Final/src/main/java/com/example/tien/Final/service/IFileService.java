@@ -8,14 +8,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface IFileService {
-    List<EmployeeDto> getAllEngineers(MultipartFile file) throws IOException;
-
-
-
 
     EmployeeDto save(EmployeeDto employeeDto);
-
-    List<EmployeeDto> readEngineersFromFile();
-
     List<EmployeeDto> readEngineersFromFiles(MultipartFile file) throws IOException;
 }

@@ -49,19 +49,6 @@ public class PositionController {
         return service.delete(id);
     }
 
-//    @PostMapping("/addPositions")
-//    public List<Position> addPositions(@RequestBody List<Position> positions){
-//        return service.savePositions(positions);
-//    }
-//    @PutMapping("/updatePosition/{id}")
-//    public PositionDto updatePosition(@PathVariable Long id ,@RequestBody PositionDto positionDto){
-//        positionDto.setId(id);
-//        return service.updatePosition(positionDto);
-//    }
-//    @DeleteMapping("/deletePosition/{id}")
-//    public String deletePosition(@PathVariable Long id){
-//        return service.deletePosition(id);
-//    }
 ////    @DeleteMapping("/positions")
 ////    public ResponseEntity<String> deleteAll(){
 ////        service.deleteAllPosition();
