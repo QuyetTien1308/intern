@@ -11,11 +11,11 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SalaryDto {
-    private Long id;
+
     private Long employeeId;
     private int daysWorked;
     private int daysOvertime;
     private BigDecimal overtimeSalary;
     private Long positionId;
-    private String positionName;
+
 }

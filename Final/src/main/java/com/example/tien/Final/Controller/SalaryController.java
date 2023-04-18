@@ -28,7 +28,7 @@ public class SalaryController {
     }
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Salary addEmployee(@RequestBody SalaryDto salaryDto){
+    public Salary addSalariesByEmployee(@RequestBody SalaryDto salaryDto){
         return salaryService.save(salaryDto);
     }
 

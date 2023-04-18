@@ -75,7 +75,7 @@ public class AuthService implements IAuthService {
         else {
             Employee user = new Employee();
             Position position = positionRepository.findById(request.getPosition()).get();
-            user.setUsername(request.getUsername());
+            user.setUsername(request.getUsername().toLowerCase());
             user.setPassword(passwordEncoder.encode(request.getPassword()));
             user.setName(request.getName());
             user.setPosition(position);

@@ -11,6 +11,7 @@ import com.example.tien.Final.repos.PositionRepository;
 import com.example.tien.Final.repos.SalaryRepository;
 import com.example.tien.Final.payload.response.GetAllRes;
 import com.example.tien.Final.service.ISalaryService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,12 +36,12 @@ public class SalaryService implements ISalaryService {
         List<SalaryDto> salaryDtos =new ArrayList<>();
         for (Salary salary : salaries){
             SalaryDto salaryDto = SalaryDto.builder()
-                    .id(salary.getId())
+
 //                    .baseSalary(salary.getBaseSalary())
                     .daysWorked(salary.getDaysWorked())
                     .daysOvertime(salary.getDaysOvertime())
                     .positionId(salary.getPosition().getId())
-                    .positionName(salary.getPosition().getName())
+
                     .employeeId(salary.getEmployee().getId())
                     .overtimeSalary(salary.getOvertimeSalary())
                     .build();
