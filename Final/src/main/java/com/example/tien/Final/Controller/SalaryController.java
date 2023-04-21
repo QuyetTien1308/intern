@@ -3,6 +3,7 @@ package com.example.tien.Final.Controller;
 import com.example.tien.Final.Dto.SalaryDto;
 import com.example.tien.Final.entity.Salary;
 import com.example.tien.Final.payload.response.GetAllRes;
+import com.example.tien.Final.payload.response.SalariesResponse;
 import com.example.tien.Final.service.ISalaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -28,7 +29,7 @@ public class SalaryController {
     }
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public Salary addSalariesByEmployee(@RequestBody SalaryDto salaryDto){
+    public SalariesResponse addSalariesByEmployee(@RequestBody SalaryDto salaryDto){
         return salaryService.save(salaryDto);
     }
 

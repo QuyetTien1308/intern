@@ -6,6 +6,7 @@ import com.example.tien.Final.entity.Employee;
 import com.example.tien.Final.entity.Position;
 import com.example.tien.Final.entity.Salary;
 import com.example.tien.Final.payload.response.EmployeeResponse;
+import com.example.tien.Final.payload.response.SalariesResponse;
 import com.example.tien.Final.repos.EmployeeRepository;
 import com.example.tien.Final.repos.PositionRepository;
 import com.example.tien.Final.repos.SalaryRepository;
@@ -30,6 +31,8 @@ public class SalaryService implements ISalaryService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private ModelMapper modelMapper;
     @Override
     public List<SalaryDto> getSalary(){
         List<Salary> salaries=salaryRepository.findAll();
@@ -54,18 +57,30 @@ public class SalaryService implements ISalaryService {
     }
 
     @Override
-    public Salary save(SalaryDto salaryDto){
+    public SalariesResponse save(SalaryDto salaryDto){
         Position position = positionService.getPositionById(salaryDto.getPositionId());
         Employee employee = employeeRepository.findById(salaryDto.getEmployeeId()).get();
-        Salary salary = Salary.builder()
-//                .baseSalary(salaryDto.getBaseSalary())
-                .daysWorked(salaryDto.getDaysWorked())
-                .daysOvertime(salaryDto.getDaysOvertime())
+        EmployeeResponse employeeResponse = modelMapper.map(employee, EmployeeResponse.class);
+        employeeResponse.setPositionId(employee.getPosition().getId());
+        SalariesResponse response = SalariesResponse.builder()
+                .employeeResponse(employeeResponse)
                 .overtimeSalary(salaryDto.getOvertimeSalary())
-                .position(position)
-                .employee(employee)
+                .daysOvertime(salaryDto.getDaysOvertime())
+                .daysWorked(salaryDto.getDaysWorked())
                 .build();
-        return salaryRepository.save(salary);
+//        Salary salary = Salary.builder()
+//
+//                .daysWorked(salaryDto.getDaysWorked())
+//                .daysOvertime(salaryDto.getDaysOvertime())
+//                .overtimeSalary(salaryDto.getOvertimeSalary())
+//                .position(position)
+//                .employee(employee)
+//                .build();
+        Salary salary = modelMapper.map(response, Salary.class);
+        salary.setEmployee(employee);
+        salary.setPosition(position);
+        salaryRepository.save(salary);
+        return response;
     }
 
 
@@ -77,7 +92,7 @@ public class SalaryService implements ISalaryService {
 
             GetAllRes getAllRes = new GetAllRes();
             Employee employee = salary.getEmployee();
-            BigDecimal baseSalary = positionRepository.findById(employee.getPosition().getId()).get().getBaseSalary();
+            BigDecimal baseSalary = positionRepository.findById(employee.getPosition().getId()).orElseThrow(() -> new RuntimeException("Id not found")).getBaseSalary();
             getAllRes.setTotalSalary((Long) ((baseSalary).longValue() * salary.getDaysWorked())+((salary.getOvertimeSalary()).longValue() * salary.getDaysOvertime()));
             EmployeeResponse response = new EmployeeResponse();
             response.setId(employee.getId());
